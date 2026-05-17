@@ -22,17 +22,17 @@ Honeypot is a minimal SSH server emulator designed to accept SSH connections, lo
 
 1. Clone the repository:
 
-   git clone https://github.com/gopal0410/Honeypot.git
-   cd Honeypot
+   `git clone https://github.com/gopal0410/Honeypot.git`
+   `cd Honeypot`
 
 3. Create a virtual environment (recommended):
 
-   python3 -m venv venv
-   source venv/bin/activate
+   `python3 -m venv venv`
+   `source venv/bin/activate`
 
 4. Install dependencies:
 
-   pip install -r requirements.txt
+   `pip install -r requirements.txt`
 
 ## Configuration
 
@@ -43,7 +43,7 @@ Honeypot is a minimal SSH server emulator designed to accept SSH connections, lo
 
 Run the honeypot with Python:
 
-   python3 Honeypot_ssh.py
+   `python3 Honeypot_ssh.py`
 
 The script listens for incoming SSH connections and appends events to `ssh_honeypot.log`. For production-like testing, run inside an isolated network or container and restrict outbound access.
 
