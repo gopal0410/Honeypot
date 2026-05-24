@@ -4,4 +4,4 @@ __pycache__/
 server.key
 ssh_honeypot.log
 http-honeypot.json
-
+logs
