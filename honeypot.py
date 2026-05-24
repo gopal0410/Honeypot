@@ -1,11 +1,20 @@
 import argparse
 import threading
 import sys
+import os
+import paramiko
 from Honeypot_ssh import Honeypot_SSH
 from Honeypot_http import Honeypot_HTTP
 
+def ensure_ssh_key(filename="server.key"):
+    if not os.path.exists(filename):
+        print(f"[*] Generating new SSH host key: {filename}")
+        key = paramiko.RSAKey.generate(2048)
+        key.write_private_key_file(filename)
+
 def run_ssh(address, port):
     try:
+        ensure_ssh_key()
         honeypot = Honeypot_SSH(address, port)
         honeypot.main()
     except Exception as e:

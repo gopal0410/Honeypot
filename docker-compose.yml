@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  honeypot:
+    build: .
+    container_name: honeypot
+    # Bind to host ports. 
+    # SSH defaults to 2222, HTTP defaults to 8080 in honeypot.py
+    ports:
+      - "2222:2222"
+      - "8080:8080"
+    volumes:
+      # Persist logs to the host machine
+      - ./logs:/app/logs
+      # Optional: Persist the SSH host key so it doesn't change on restart
+      # - ./server.key:/app/server.key
+    restart: unless-stopped

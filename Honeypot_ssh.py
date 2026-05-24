@@ -3,6 +3,7 @@ import json
 import paramiko
 import socket
 import threading
+import os
 from datetime import datetime, timezone
 
 class Server(paramiko.ServerInterface):
@@ -113,7 +114,10 @@ class Honeypot_SSH:
                 ('oracle', 'welcome'),
                 ('postgres', 'letmein'),
                 ('test','passw0rd')]
-        self.log_file = "ssh-log.json"
+        self.log_dir = "logs"
+        self.log_file = os.path.join(self.log_dir, "ssh-log.json")
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir)
         self.host_key = paramiko.RSAKey(filename="server.key")
 
     def log_activity(self, event_type, client_ip, **kwargs):
@@ -125,6 +129,7 @@ class Honeypot_SSH:
         }
         with open(self.log_file, "a") as file:
             json.dump(entry, file, indent=4)
+            file.write("\n\n")
         
 
     def shell(self, channel, client_ip):

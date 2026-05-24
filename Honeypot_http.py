@@ -2,6 +2,7 @@ import http.server
 import json
 import re
 import time
+import os
 import socket
 import urllib.parse
 from datetime import datetime, timezone
@@ -13,7 +14,10 @@ class Honeypot_HTTP:
     def __init__(self, bind_ip="0.0.0.0", port=8080):
         self.bind_ip = bind_ip
         self.port = port
-        self.log_file = "http-honeypot.json"
+        self.log_dir = "logs"
+        self.log_file = os.path.join(self.log_dir, "http-honeypot.json")
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir)
 
     def classify(self, value):
         tags = []
