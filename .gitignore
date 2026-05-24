@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 server.key
 ssh_honeypot.log
+http-honeypot.json
+

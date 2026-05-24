@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign in – MyApp</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f0f2f5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #1a1a2e;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.10);
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+    .logo span {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #2563eb;
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #374151;
+    }
+
+    label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 500;
+      color: #6b7280;
+      margin-bottom: .35rem;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: .65rem .85rem;
+      border: 1.5px solid #d1d5db;
+      border-radius: 8px;
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .2s;
+      margin-bottom: 1.1rem;
+    }
+    input:focus { border-color: #2563eb; }
+
+    .btn {
+      width: 100%;
+      padding: .72rem;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+      margin-top: .25rem;
+    }
+    .btn:hover { background: #1d4ed8; }
+
+    .footer {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: .82rem;
+      color: #9ca3af;
+    }
+    .footer a { color: #2563eb; text-decoration: none; }
+
+    #msg {
+      font-size: .85rem;
+      color: #dc2626;
+      text-align: center;
+      min-height: 1.2em;
+      margin-bottom: .75rem;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="logo"><span>&#9650; MyApp</span></div>
+  <h2>Sign in to your account</h2>
+
+  <div id="msg"></div>
+
+  <form id="loginForm">
+    <label for="username">Email or username</label>
+    <input type="text" id="username" name="username"
+           placeholder="you@example.com" autocomplete="username" required />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password"
+           placeholder="••••••••" autocomplete="current-password" required />
+
+    <button type="submit" class="btn">Sign in</button>
+  </form>
+
+  <div class="footer">
+    Don't have an account? <a href="#">Sign up</a> &nbsp;·&nbsp;
+    <a href="#">Forgot password?</a>
+  </div>
+</div>
+
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const body = new URLSearchParams(new FormData(form)).toString();
+
+    const res  = await fetch("/login", {
+      method:  "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body,
+    });
+
+    const text = await res.text();
+    document.getElementById("msg").textContent = text;
+  });
+</script>
+</body>
+</html>

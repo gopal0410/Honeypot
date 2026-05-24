@@ -1,0 +1,53 @@
+{
+    "timestamp": "2026-05-23T13:34:29.544552+00:00",
+    "event": "auth",
+    "src_ip": "192.168.31.159",
+    "username": "root",
+    "password": "123456"
+}{
+    "timestamp": "2026-05-23T13:34:31.503740+00:00",
+    "event": "command",
+    "src_ip": "192.168.31.159",
+    "command": "whoami"
+}{
+    "timestamp": "2026-05-23T13:34:32.672984+00:00",
+    "event": "command",
+    "src_ip": "192.168.31.159",
+    "command": "exit"
+}{
+    "timestamp": "2026-05-24T00:44:50.695034+00:00",
+    "event": "auth",
+    "src_ip": "192.168.31.159",
+    "username": "test",
+    "password": "passw0rd"
+}{
+    "timestamp": "2026-05-24T00:44:52.529875+00:00",
+    "event": "command",
+    "src_ip": "192.168.31.159",
+    "command": "whoami"
+}{
+    "timestamp": "2026-05-24T00:44:53.384211+00:00",
+    "event": "command",
+    "src_ip": "192.168.31.159",
+    "command": "ls"
+}{
+    "timestamp": "2026-05-24T00:44:55.421874+00:00",
+    "event": "command",
+    "src_ip": "192.168.31.159",
+    "command": "cd home"
+}{
+    "timestamp": "2026-05-24T00:44:57.600232+00:00",
+    "event": "command",
+    "src_ip": "192.168.31.159",
+    "command": "cd honeypot-bear"
+}{
+    "timestamp": "2026-05-24T00:45:01.206247+00:00",
+    "event": "command",
+    "src_ip": "192.168.31.159",
+    "command": "cat credentials.txt"
+}{
+    "timestamp": "2026-05-24T00:45:03.040997+00:00",
+    "event": "command",
+    "src_ip": "192.168.31.159",
+    "command": "exit"
+}

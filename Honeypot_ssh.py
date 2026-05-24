@@ -1,4 +1,5 @@
 import logging
+import json
 import paramiko
 import socket
 import threading
@@ -102,15 +103,17 @@ class FakeFileSystem:
         return f"cat: {filename}: No such file or directory"
     
 class Honeypot_SSH:
-    def __init__(self, bind_ip="0.0.0.0", credentials=None):
+    def __init__(self, bind_ip="0.0.0.0", port=2222):
         self.bind_ip = bind_ip
-        self.port = 2222
-        self.credentials = credentials or []
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.INFO)
-        handler = logging.FileHandler("ssh_honeypot.log")
-        handler.setFormatter(logging.Formatter("%(message)s"))
-        self.logger.addHandler(handler)
+        self.port = port
+        self.credentials = [('root', '123456'),
+                ('admin', 'password'),
+                ('ubuntu', 'admin'),
+                ('user', 'qwerty'),
+                ('oracle', 'welcome'),
+                ('postgres', 'letmein'),
+                ('test','passw0rd')]
+        self.log_file = "ssh-log.json"
         self.host_key = paramiko.RSAKey(filename="server.key")
 
     def log_activity(self, event_type, client_ip, **kwargs):
@@ -120,7 +123,8 @@ class Honeypot_SSH:
             "src_ip": client_ip,
             **kwargs
         }
-        self.logger.info(entry)
+        with open(self.log_file, "a") as file:
+            json.dump(entry, file, indent=4)
         
 
     def shell(self, channel, client_ip):
@@ -163,7 +167,7 @@ class Honeypot_SSH:
     
     def client_handler(self, client, addr):
         client_ip = addr[0]
-        print(f"{client_ip} has connected to the server.")
+        print(f"[-] {client_ip} has connected to the server.")
 
         try:
             transport = paramiko.Transport(client)
@@ -200,24 +204,16 @@ class Honeypot_SSH:
         sock.bind((self.bind_ip, self.port))
 
         sock.listen(100)
-        print(f"SSH is listening on port {self.port}")
+        print(f"[-] SSH is listening on port {self.port}")
 
         while True:
             try:
                 client, addr = sock.accept()
                 ssh_thread = threading.Thread(target=self.client_handler, args=(client, addr))
                 ssh_thread.start()
-
+            except KeyboardInterrupt:
+                print("\n[-] Exiting....")
             except Exception as error:
-                print(error)
+                print(f"{error}")
 
-if __name__ == "__main__":
-    credentials = [('root', '123456'),
-                   ('admin', 'password'),
-                   ('ubuntu', 'admin'),
-                   ('user', 'qwerty'),
-                   ('oracle', 'welcome'),
-                   ('postgres', 'letmein'),
-                   ('test','passw0rd')]
-    honeypot = Honeypot_SSH(credentials=credentials)
-    honeypot.main()
+
